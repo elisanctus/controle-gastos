@@ -13,6 +13,24 @@ const DATABASE_URL = process.env.DATABASE_URL || "postgres://postgres:postgres@d
 
 const pool = new Pool({ connectionString: DATABASE_URL });
 
+// --- DB health check with retries ---
+async function waitForDb(maxRetries = 30, delayMs = 2000) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      await pool.query("SELECT 1");
+      console.log("✅ Database connected");
+      return true;
+    } catch (err) {
+      console.log(`⏳ Waiting for database... (${i + 1}/${maxRetries})`);
+      if (i === maxRetries - 1) {
+        console.error("❌ Database connection failed after retries");
+        throw err;
+      }
+      await new Promise(resolve => setTimeout(resolve, delayMs));
+    }
+  }
+}
+
 app.use(cors());
 app.use(express.json());
 
@@ -41,7 +59,7 @@ async function initDb() {
     );
     CREATE INDEX IF NOT EXISTS idx_tx_user ON transactions(user_id);
   `);
-  console.log("DB ready");
+  console.log("✅ DB schema ready");
 }
 
 // --- auth middleware ---
@@ -135,9 +153,13 @@ app.delete("/api/transactions/:id", auth, async (req, res) => {
 });
 
 // start
-initDb().then(() => {
-  app.listen(PORT, "0.0.0.0", () => console.log(`API listening on :${PORT}`));
-}).catch(e => {
-  console.error("DB init failed", e);
-  process.exit(1);
-});
+(async () => {
+  try {
+    await waitForDb();
+    await initDb();
+    app.listen(PORT, "0.0.0.0", () => console.log(`✅ API listening on :${PORT}`));
+  } catch (e) {
+    console.error("❌ Startup failed:", e.message);
+    process.exit(1);
+  }
+})();
