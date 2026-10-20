@@ -1,0 +1,21 @@
+{
+  "name": "Controle de Gastos",
+  "short_name": "Gastos",
+  "description": "Controle de gastos por meses — parcelado, fixo e por voz",
+  "start_url": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "browser"],
+  "background_color": "#f9fafb",
+  "theme_color": "#111827",
+  "orientation": "portrait",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Nova transação", "url": "/?novo=1", "description": "Adicionar gasto ou receita" },
+    { "name": "Lançamentos", "url": "/?tab=lancamentos", "description": "Ver lançamentos do mês" }
+  ]
+}

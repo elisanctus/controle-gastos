@@ -1,0 +1,63 @@
+:root {
+  --text: #52525b;
+  --text-h: #27272a;
+  --bg: #f9fafb;
+  --border: #e4e4e7;
+  --code-bg: #f4f4f5;
+  --primary: #374151;
+  --primary-hover: #1f2937;
+  --accent: #eab308;
+  --accent-hover: #ca8a04;
+  --accent-bg: rgba(234, 179, 8, 0.12);
+  --accent-border: rgba(234, 179, 8, 0.55);
+  --shadow: rgba(0, 0, 0, 0.08) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+  --nav-h: 64px;
+  --app-max: 1120px;
+  --app-max-mobile: 520px;
+  font: 16px/1.45 var(--sans);
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #a1a1aa;
+    --text-h: #fafafa;
+    --bg: #18181b;
+    --border: #27272a;
+    --code-bg: #27272a;
+    --primary: #9ca3af;
+    --primary-hover: #d4d4d8;
+    --accent: #facc15;
+    --accent-hover: #fde047;
+    --accent-bg: rgba(250, 204, 21, 0.15);
+    --accent-border: rgba(250, 204, 21, 0.5);
+    --shadow: rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scrollbar-gutter: stable; }
+body { margin: 0; background: var(--bg); color: var(--text); overscroll-behavior-y: contain; -webkit-tap-highlight-color: transparent; }
+#root {
+  width: min(var(--app-max), 100%);
+  margin: 0 auto;
+  min-height: 100dvh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+/* mobile shell: full width, no border, like native app */
+@media (max-width: 900px) {
+  #root { width: 100%; max-width: 100%; border: none; }
+  :root { font-size: 16px; }
+}
+h1, h2 { font-family: var(--heading); font-weight: 600; color: var(--text-h); }
+h1 { font-size: 28px; letter-spacing: -0.02em; margin: 0; }
+h2 { font-size: 18px; margin: 0 0 8px; }
+p { margin: 0; }
+code { font-family: var(--mono); font-size: 13px; padding: 3px 6px; background: var(--code-bg); border: 1px solid var(--border); border-radius: 6px; color: var(--text-h); }
